@@ -8,7 +8,7 @@ gulp.task('default', function() {
 
 const babel = require('gulp-babel'); 
 gulp.task('babel', () => {
-    return gulp.src('src/app.js')
+    return gulp.src('src/*.js')
         .pipe(babel({
             presets: ['es2015']
         }))
@@ -16,16 +16,9 @@ gulp.task('babel', () => {
 });
 
 
-
-var rjs = require('gulp-requirejs');
-gulp.task('requirejsBuild', function() {
-    return rjs({
-        baseUrl: 'dist/babel/app.js',
-        out: 'test.js',
-        shim: {
-            // standard require.js shim options 
-        },
-        // ... more require.js options 
-    })
-        .pipe(gulp.dest('dist/')); // pipe it to the output DIR 
+var webpack = require('gulp-webpack');
+gulp.task('webpack', function() {
+  return gulp.src('dist/babel/main.js')
+    .pipe(webpack())
+    .pipe(gulp.dest('dist/'));
 });
